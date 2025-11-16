@@ -6,6 +6,9 @@ A sophisticated tool that leverages GPT-5.1 Codex, OpenAI Agents, GitHub CLI, an
 ## Features
 
 - **Intelligent Issue Analysis**: Automatically reads and understands GitHub issues using AI
+- **Real-Time Streaming Output**: Watch the AI agent work in real-time with live progress updates
+- **Tool Call Tracking**: See exactly which tools are being used and their progress
+- **Reasoning Display**: Observe the agent's reasoning process as it analyzes the issue
 - **Targeted Repository Exploration**: Smart analysis of relevant code files without scanning entire projects
 - **External Documentation Research**: Integrated Firecrawl web scraping for framework/library documentation
 - **Cost-Optimized Approach**: Selective file inspection to minimize API costs and maximize efficiency
@@ -30,6 +33,12 @@ The planner agent follows a sophisticated workflow:
 4. Selectively inspects key implementation files
 5. Researches external documentation when needed
 6. Generates comprehensive execution plans
+
+The agent uses **real-time streaming** to provide immediate feedback:
+- **Streaming Events**: Token-by-token text generation for instant results
+- **Progress Tracking**: Numbered tool calls show execution order
+- **Reasoning Visibility**: See the agent's decision-making process
+- **Live Updates**: All output streams in real-time without waiting for completion
 
 ## Installation
 
@@ -75,6 +84,34 @@ Then enter the repository and issue number when prompted.
 python src/app.py --repo openai/openai-agents-python --issue 456
 ```
 
+### Real-Time Output
+
+The tool provides real-time streaming output showing:
+- **💭 Reasoning**: The agent's thought process as it analyzes the issue
+- **🔧 Calling**: Tool calls with arguments (e.g., `get_github_issue → repo#issue`)
+- **Live Text Streaming**: Token-by-token generation of the execution plan
+- **Tool Summary**: Complete list of all tools used during analysis
+
+Example output:
+```
+🔍 Analyzing owner/repo#123...
+
+💭 Reasoning: I need to understand the issue first...
+
+[1] 🔧 Calling: get_github_issue → owner/repo#123...
+
+💭 Reasoning: Based on the issue, I should explore the src/ directory...
+
+[2] 🔧 Calling: list_repo_files_gh → ext=['.py'], paths=['src/']...
+
+[3] 🔧 Calling: get_repo_file_gh → src/main.py...
+
+[Execution plan text streams here in real-time...]
+
+---
+📊 Tools used (5): get_github_issue, list_repo_files_gh, get_repo_file_gh, firecrawl_search, firecrawl_scrape
+```
+
 ## Output
 
 The tool generates comprehensive execution plans including:
@@ -85,7 +122,15 @@ The tool generates comprehensive execution plans including:
 - **Testing Strategy**: Unit, integration, and manual testing approaches
 - **Risk Assessment**: Edge cases, potential issues, and open questions
 
+### Output Format
+
 Results are saved to `output/execution_plan_{repo}_{issue}_{timestamp}.md`
+
+The console output includes:
+- Real-time streaming of the execution plan as it's generated
+- Tool call progress with numbered tracking
+- Reasoning steps showing the agent's thought process
+- Summary of all tools used during analysis
 
 ## Development
 
@@ -102,7 +147,15 @@ src/
 ```
 
 ### Key Technologies
-- **OpenAI Agents**: AI-powered workflow orchestration
+- **OpenAI Agents**: AI-powered workflow orchestration with streaming support
 - **GPT-5.1 Codex**: Advanced code analysis and generation
 - **GitHub CLI**: Repository access and file operations
 - **Firecrawl**: Web scraping and documentation retrieval
+- **Real-Time Streaming**: Live event streaming for immediate feedback
+
+### Recent Improvements
+- ✅ Real-time streaming output with token-by-token generation
+- ✅ Tool call progress tracking with numbered display
+- ✅ Reasoning visibility to see agent decision-making
+- ✅ Improved error handling and fallback mechanisms
+- ✅ Cleaner, more informative console output
