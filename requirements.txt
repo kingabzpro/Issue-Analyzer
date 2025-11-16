@@ -1,0 +1,2 @@
+openai-agents==0.5.1
+firecrawl-py==2.4.0
